@@ -1,0 +1,57 @@
+
+
+ {% block title %}Thank you for participating!{% endblock %}
+    {% block content %}
+
+
+
+    <p><strong>
+        {% if player.app_to_pay == 'stage1_final' %}
+        Stage 1 was randomly chosen for payment.<br>
+
+
+        {% elif player.app_to_pay == 'stage2_2test' %}
+        Stage 2 was randomly chosen for payment.<br>
+
+
+        {% elif player.app_to_pay == 'stage3' %}
+        Stage 3 was randomly chosen for payment.<br>
+
+
+        {% endif %}
+    </strong></p>
+
+    <p>
+        Payment per round = {% 1.5 %}<br>
+        <strong>Therefore payment  = {% participant.payoff %} </strong>
+    </p>
+
+    <p>
+         {%if player.charity_to_pay == 'stage2_2test' %}
+        For the randomly chosen PlayerID called out, charity contributions for Stage 2 will be donated.
+
+        {% elif player.charity_to_pay == 'stage3' %}
+        For the randomly chosen PlayerID called out, charity contributions for Stage 3 will be donated.
+
+        {% endif %}
+    </p>
+
+    <p>
+        You will now be called to collect your payment. Please remain seated until your ID is called. Then take
+                your number card, and proceed to the cashier.
+    </p>
+
+
+     <p>
+        Thank you for participating in today's experiment!  We hope to see you at another experiment at LEDR soon.
+    </p>
+
+<footer>
+            <hr/>
+            <div class="text-right">
+                <p class="text-muted font-italic">Laboratory for Economic and Decision Research, University of East Anglia
+                    <img src="{% static 'global/uea.png' %}" class="align-content-center ml-3" alt="UEA logo"/>
+                </p>
+        </div>
+        </footer>
+{% endblock %}
