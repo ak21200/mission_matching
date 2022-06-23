@@ -209,7 +209,7 @@ class S3_Instructions(Page):
         return player.round_number == 1
 
 class Game(Page):
-    timeout_seconds = 15
+    timeout_seconds = 90
 
     live_method = play_game
 
