@@ -1,0 +1,101 @@
+{% block title %}Stage 2: Instructions{% endblock %}
+{% block content %}
+
+
+    <p>
+        {% if participant.charity_order == True and participant.CISWO == 1  %}
+        You have been assigned the following charity for this stage: <strong>CISWO (CISWO (Coal Industry Social Welfare
+        Organisation) - Most preferred charity </strong>
+
+        {% elif participant.charity_order == True and participant.Ember == 1  %}
+        You have been assigned the following charity for this stage: <strong>The Crowd: Ember - Most preferred charity </strong>
+
+        {% elif participant.charity_order == True and participant.CARE == 1  %}
+        You have been assigned the following charity for this stage: <strong>CARE (Christian Action, Research, and
+        Education) - Most preferred charity </strong>
+
+        {% elif participant.charity_order == True and participant.BPAS == 1  %}
+        You have been assigned the following charity for this stage: <strong>BPAS (British Pregnancy Advisory Service)
+        - Most preferred charity </strong>
+
+        {% elif participant.charity_order == False and participant.CISWO == 4  %}
+        You have been assigned the following charity for this stage: <strong>CISWO (CISWO (Coal Industry Social Welfare
+        Organisation) - Charity you do not support </strong>
+
+        {% elif participant.charity_order == False and participant.Ember == 4  %}
+        You have been assigned the following charity for this stage: <strong>The Crowd: Ember - Charity you do not
+        support </strong>
+
+        {% elif participant.charity_order == False and participant.CARE == 4  %}
+        You have been assigned the following charity for this stage: <strong>CARE (Christian Action, Research, and
+        Education) - Charity you do not support </strong>
+
+        {% elif participant.charity_order == False and participant.BPAS == 4  %}
+        You have been assigned the following charity for this stage: <strong>BPAS (British Pregnancy Advisory Service)
+        - Charity you do not support </strong>
+
+        {% endif %}
+    </p>
+
+    <p>
+        Every slider task correctly completed in the following rounds of this stage will result in a £0.05 donation to
+        your assigned charity for this stage. At the end of the experiment, one participant will be chosen by the
+        experimenter through a randomly drawn ID token. For the chosen participant, the charity contribution for one
+        randomly chosen stage will be donated. The charity contribution is independent of your payment i.e. not deducted
+        from your payment.
+    </p>
+
+
+    {% if participant.penalty == False %}
+        <strong>
+            <p>
+               If this stage is chosen for your payment, you will receive £1.50 for each round.
+            </p>
+        </strong>
+            <p>
+                How many sliders you complete is up to you. You will move on to the next stage when you have completed
+                all rounds.
+            </p>
+
+    {% elif participant.penalty == True %}
+        <strong>
+            <p>
+                If this stage is chosen for your payment, you will receive £1.50 for each round.
+            </p>
+            <p>
+                However, if you complete fewer than 20 sliders correctly in a round, the stage will terminate for you after
+                that round. You will not be able to participate in the remaining rounds of that stage and will forgo the
+                payment for those rounds. You will be paid for the rounds you have completed i.e. rounds up to and including
+                the round until termination.
+            </p>
+        </strong>
+        <p><em>
+                How many sliders you complete is up to you. You will move on to the next stage when you have completed
+                all rounds or the stage gets terminated. </em>
+            </p>
+
+    {% endif %}
+
+
+    <p>
+    Please raise your hand if you have any questions.
+    </p>
+
+    <p>
+    Click on (next) to begin the first round.
+    </p>
+
+
+    {% next_button %}
+
+    <footer>
+            <hr/>
+            <div class="text-right">
+                <p class="text-muted font-italic">Laboratory for Economic and Decision Research, University of East Anglia
+                    <img src="{% static 'global/uea.png' %}" class="align-content-center ml-3" alt="UEA logo"/>
+                </p>
+        </div>
+        </footer>
+
+
+{% endblock %}
