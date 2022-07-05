@@ -1,13 +1,11 @@
 import time
-import random
-import json
 from contextlib import contextmanager
 
 from otree.api import *
 from otree import settings
 
-from . import Player, Puzzle, Slider,  Game
-from .task_sliders import snap_value, SLIDER_SNAP
+from . import Puzzle, Slider,  Game
+from sliders.task_sliders import snap_value, SLIDER_SNAP
 
 
 class PlayerBot(Bot):

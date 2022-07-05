@@ -3,11 +3,11 @@ import json
 from PIL import Image, ImageDraw
 import random
 
-SLIDER_SNAP = 4  # size of 1 unit
+SLIDER_SNAP = 3  # size of 1 unit
 SLIDER_WIDTH = SLIDER_SNAP * 100
 SLIDER_EXTRA = 64  # padding used to randomly shift sliders
 SLIDER_TICKS = 10  # every N
-SLIDER_HEIGHT = 48
+SLIDER_HEIGHT = 40
 SLIDER_MARGIN = 15  # to fit handle and shade
 
 SLIDER_BBOX = (SLIDER_WIDTH + SLIDER_EXTRA, SLIDER_HEIGHT)

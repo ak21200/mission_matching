@@ -5,8 +5,8 @@ import json
 from otree import settings
 from otree.api import *
 
-from .image_utils import encode_image
-from . import task_sliders
+from sliders.image_utils import encode_image
+from sliders import task_sliders
 
 doc = """
 """
@@ -211,6 +211,7 @@ class Instructions(Page):
 
 
 class Game(Page):
+    template_name = "global/Game.html"
     timeout_seconds = 90
 
     live_method = play_game

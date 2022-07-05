@@ -2,18 +2,17 @@
 import time
 import json
 
-from otree import settings
 from otree.api import *
 
-from .image_utils import encode_image
-from . import task_sliders
+from sliders.image_utils import encode_image
+from sliders import task_sliders
 
 doc = """
 """
 
 
 class Constants(BaseConstants):
-    name_in_url = "sliders"
+    name_in_url = "stage1"
     players_per_group = None
     num_rounds = 5
 
@@ -211,6 +210,7 @@ class Instructions(Page):
 
 
 class Game(Page):
+    template_name = "global/Game.html"
     timeout_seconds = 90
 
     live_method = play_game
