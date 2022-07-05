@@ -1,39 +1,27 @@
 {% block title %}
-Result for Stage 1
+Stage 1 results
 {% endblock %}
 
 {% block content %}
 
-
 <p>
-    Payment structure in this round = £1.5 per round.</p>
-
-<p>
-
-    Sliders completed in round 1 = {% num_correct_s1_1 %}<br>
-    Sliders completed in round 2 = {% num_correct_s1_2 %}<br>
-    Sliders completed in round 3 = {% num_correct_s1_3 %}<br>
-    Sliders completed in round 4 = {% num_correct_s1_4 %}<br>
-    Sliders completed in round 5 = {% num_correct_s1_5 %}<br>
+    Here is a summary of how many sliders you completed in Stage 1:
+    <ul>
+    <li>Round 1: <b>{% num_correct_s1_1 %} sliders</b></li>
+    <li>Round 2: <b>{% num_correct_s1_2 %} sliders</b></li>
+    <li>Round 3: <b>{% num_correct_s1_3 %} sliders</b></li>
+    <li>Round 4: <b>{% num_correct_s1_4 %} sliders</b></li>
+    <li>Round 5: <b>{% num_correct_s1_5 %} sliders</b></li>
+    </ul>
 
 </p>
 
 <p>
-    <strong>If this stage is chosen for payment, your payoff will be = {% player.potential_payoff %}</strong>
+    Remember that if this stage is chosen to determine your earnings for the experiment,
+    your earnings would be <b>{% player.potential_payoff %}</b>.
 </p>
 
-
-
-
-{% next_button %}
-
-    <footer>
-            <hr/>
-            <div class="text-right">
-                <p class="text-muted font-italic">Laboratory for Economic and Decision Research, University of East Anglia
-                    <img src="{% static 'global/uea.png' %}" class="align-content-center ml-3" alt="UEA logo"/>
-                </p>
-        </div>
-        </footer>
+    {{ include "global/ButtonIfDemo.html" }}
+    {{ include "global/Footer.html" }}
 
 {% endblock %}
