@@ -238,11 +238,14 @@ class Game(Page):
         player.participant.vars['num_correct_s2_' + str(player.round_number)] = player.num_correct
 
 
-class Termination(Page):
+class Results(Page):
     @staticmethod
     def is_displayed(player: Player):
         participant = player.participant
-        return participant.penalty and player.num_correct < 20
+        return (
+            player.round_number == 5 or
+            (participant.penalty and player.num_correct < 20)
+        )
 
     @staticmethod
     def vars_for_template(player: Player):
@@ -271,6 +274,7 @@ class Termination(Page):
             num_correct_s2_5 = participant.vars['num_correct_s2_5']
 
         return dict(
+            termination=participant.penalty and player.num_correct < 20,
             num_correct_s2_1=num_correct_s2_1,
             num_correct_s2_2=num_correct_s2_2,
             num_correct_s2_3=num_correct_s2_3,
@@ -280,34 +284,12 @@ class Termination(Page):
 
     @staticmethod
     def app_after_this_page(player: Player, upcoming_apps):
-        return 'stage3'
-
-
-class Results(Page):
-    @staticmethod
-    def is_displayed(player):
-        return player.round_number == 5
-
-    @staticmethod
-    def vars_for_template(player: Player):
-        participant = player.participant
-        potential_payoff = cu(7.5)
-        player.potential_payoff = potential_payoff
-        participant.app_payoffs['stage2'] = potential_payoff
-        participant.rounds['stage2'] = player.round_number
-
-        return dict(
-            num_correct_s2_1=participant.vars['num_correct_s2_1'],
-            num_correct_s2_2=participant.vars['num_correct_s2_2'],
-            num_correct_s2_3=participant.vars['num_correct_s2_3'],
-            num_correct_s2_4=participant.vars['num_correct_s2_4'],
-            num_correct_s2_5=participant.vars['num_correct_s2_5']
-        )
+        if player.participant.penalty and player.num_correct < 20:
+            return 'stage3'
 
 
 page_sequence = [
     Instructions,
     Game,
-    Termination,
-    Results
+    Results,
 ]

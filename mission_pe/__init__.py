@@ -37,44 +37,44 @@ class Player(BasePlayer):
     charity_order = models.BooleanField()
 
     CISWO = models.IntegerField(
-        label="CISWO",
+        label="",
         widget=widgets.RadioSelectHorizontal,
         choices=[
-            [1, '1 (Most preferred charity)'],
+            [1, '1 (Most preferred)'],
             [2, '2'],
             [3, '3'],
-            [4, '4 (Do not support)'],
+            [4, '4 (Least preferred)'],
         ]
     )
 
     Ember = models.IntegerField(
-        label="The Crowd: Ember",
+        label="",
         widget=widgets.RadioSelectHorizontal,
         choices=[
-            [1, '1 (Most preferred charity)'],
+            [1, '1 (Most preferred)'],
             [2, '2'],
             [3, '3'],
-            [4, '4 (Do not support)'],
+            [4, '4 (Least preferred)'],
         ]
     )
     CARE = models.IntegerField(
-        label="CARE",
+        label="",
         widget=widgets.RadioSelectHorizontal,
         choices=[
-            [1, '1 (Most preferred charity)'],
+            [1, '1 (Most preferred)'],
             [2, '2'],
             [3, '3'],
-            [4, '4 (Do not support)'],
+            [4, '4 (Least preferred)'],
         ]
     )
     BPAS = models.IntegerField(
-        label="BPAS",
+        label="",
         widget=widgets.RadioSelectHorizontal,
         choices=[
-            [1, '1 (Most preferred charity)'],
+            [1, '1 (Most preferred)'],
             [2, '2'],
             [3, '3'],
-            [4, '4 (Do not support)'],
+            [4, '4 (Least preferred)'],
         ]
     )
 
@@ -87,15 +87,10 @@ class Ranking(Page):
 
     @staticmethod
     def error_message(player, values):
-        print('values is', values)
-        if values['CISWO'] + values['Ember'] + values['CARE'] + values['BPAS'] != 10:
-            return 'Each charity must have a unique rank. Please check your ranking.'
+        if set(values.values()) != set([1, 2, 3, 4]):
+            return 'Each charity must have a unique ranking.  Please review your rankings below.'
 
-    def error_message(player, values):
-        print('values is', values)
-        if values['CISWO']*values['CISWO'] + values['Ember']*values['Ember'] + values['CARE']*values['CARE'] + values['BPAS']*values['BPAS'] != 30:
-            return 'Each charity must have a unique rank. Please check your ranking.'
-
+    @staticmethod
     def before_next_page(player: Player, timeout_happened):
         participant = player.participant
         participant.vars['CISWO'] = player.CISWO

@@ -12,16 +12,7 @@ Stage 2: Round {% player.round_number %} of 5
     <canvas id="canvas" class="m-2"></canvas>
 
 </div>
-<br>
-
-    <footer>
-            <hr/>
-            <div class="text-right">
-                <p class="text-muted font-italic">Laboratory for Economic and Decision Research, University of East Anglia
-                    <img src="{% static 'global/uea.png' %}" class="align-content-center ml-3" alt="UEA logo"/>
-                </p>
-        </div>
-        </footer>
+{{ include "global/Footer.html" }}
 {% endblock %}
 
 {% block scripts %}

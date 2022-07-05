@@ -1,11 +1,17 @@
+{% block title %}
+    Charity donations
+{% endblock %}
 
 {% block content %}
-    <p><strong>
-        Please rank the following charities from 1 to 4 in order of your true preference (1 being most preferred charity
-        and 4 being the charity that you do not support). Your choice will not impact your payment. In the experiment, your decisions can
-        generate a monetary donation for the charity of your choice, in addition to you own payment. Remember, data
-        collected is anonymised.
-    </strong></p>
+    <p>
+        In today's experiment, your decisions can generate a monetary donation for a charity, in addition to the
+        amount you will earn.
+    </p>
+
+    <p>
+        Please rank the following charities from 1 to 4 in the order of your preference, with 1 being the
+        charity you prefer the most, and 4 the charity you prefer the least.
+    </p>
 
     {% block form_content %}
 
@@ -62,16 +68,11 @@
 
     {% endblock form_content %}
 
-        {{ next_button }}
+    <div class="row justify-content-center">
+        <div class="col-3">
+            <button class="otree-btn-next btn btn-primary">Confirm ranking</button>
+        </div>
+    </div>
 
-
-    <footer>
-            <hr/>
-            <div class="text-right">
-                <p class="text-muted font-italic">Laboratory for Economic and Decision Research, University of East Anglia
-                    <img src="{% static 'global/uea.png' %}" class="align-content-center ml-3" alt="UEA logo"/>
-                </p>
-            </div>
-    </footer>
-
+   {{ include "global/Footer.html" }}
 {% endblock %}
