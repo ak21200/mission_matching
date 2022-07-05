@@ -1,0 +1,27 @@
+{% block title %}
+Stage 1 results
+{% endblock %}
+
+{% block content %}
+
+<p>
+    Here is a summary of how many sliders you completed in Stage 1:
+    <ul>
+    <li>Round 1: <b>{% num_correct_s1_1 %} sliders</b></li>
+    <li>Round 2: <b>{% num_correct_s1_2 %} sliders</b></li>
+    <li>Round 3: <b>{% num_correct_s1_3 %} sliders</b></li>
+    <li>Round 4: <b>{% num_correct_s1_4 %} sliders</b></li>
+    <li>Round 5: <b>{% num_correct_s1_5 %} sliders</b></li>
+    </ul>
+
+</p>
+
+<p>
+    If Stage 1 is chosen to determine your earnings for the experiment,
+    your earnings would be <b>{% player.potential_payoff %}</b>.
+</p>
+
+    {{ include "global/ButtonIfDemo.html" }}
+    {{ include "global/Footer.html" }}
+
+{% endblock %}

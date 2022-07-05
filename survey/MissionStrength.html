@@ -1,0 +1,61 @@
+{% block title %}Survey{% endblock %}
+{% block content %}
+
+    <p>
+        All stages are now complete. Please answer the following questions. Remember, data collected is anonymised.
+    </p>
+
+    <p>
+        Please indicate to what extent do you agree or disagree with the following statements.
+    </p>
+     {% block form_content %}
+
+            <div class="container border bg-light p-2 mt-2 mb-2">
+                <div class="mb-3">
+
+                    <p>
+                        I support CISWO (Coal Industry Social Welfare Organisation). Your previously assigned rank to this
+                                charity was {% participant.CISWO %}
+                        {% formfield 'strength_ciswo'%}
+                    </p>
+                </div>
+            </div>
+
+            <div class="container border bg-light p-2 mt-2 mb-2">
+                <div class="mb-3">
+                        <p>I support The Crowd:Ember. Your previously assigned rank to this charity was {% participant.Ember %}
+                                 {% formfield 'strength_ember' %}
+                        </p>
+                </div>
+            </div>
+
+            <div class="container border bg-light p-2 mt-2 mb-2">
+                <div class="mb-3">
+                        <p>I support CARE (Christian Action, Research, and Education) . Your previously assigned rank to this charity was {% participant.CARE %}
+                        {% formfield 'strength_care' %}
+                        </p>
+                </div>
+            </div>
+
+            <div class="container border bg-light p-2 mt-2 mb-2">
+                <div class="mb-3">
+                        <p>I support BPAS (British Pregnancy Advisory Service) . Your previously assigned rank to this charity was {% participant.BPAS %}
+                        {% formfield 'strength_bpas' %}
+                        </p>
+                </div>
+            </div>
+    {% endblock form_content %}
+
+
+    {% next_button %}
+
+    <footer>
+            <hr/>
+            <div class="text-right">
+                <p class="text-muted font-italic">Laboratory for Economic and Decision Research, University of East Anglia
+                    <img src="{% static 'global/uea.png' %}" class="align-content-center ml-3" alt="UEA logo"/>
+                </p>
+        </div>
+        </footer>
+
+{% endblock %}
