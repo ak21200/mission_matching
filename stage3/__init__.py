@@ -11,16 +11,16 @@ from . import task_sliders
 doc = """
 """
 
+
 class Constants(BaseConstants):
     name_in_url = 'stage3'
     players_per_group = None
     num_rounds = 5
 
 
-
-
 class Subsession(BaseSubsession):
     pass
+
 
 def creating_session(subsession: Subsession):
     for p in subsession.get_players():
@@ -203,10 +203,12 @@ def play_game(player: Player, message: dict):
             )
         }
 
-class S3_Instructions(Page):
+
+class Instructions(Page):
     @staticmethod
     def is_displayed(player):
         return player.round_number == 1
+
 
 class Game(Page):
     timeout_seconds = 90
@@ -234,11 +236,12 @@ class Game(Page):
             player.num_correct = puzzle.num_correct
         player.participant.vars['num_correct_s3_' + str(player.round_number)] = player.num_correct
 
+
 class Termination(Page):
     @staticmethod
     def is_displayed(player: Player):
         participant = player.participant
-        return participant.penalty == True and player.num_correct < 20
+        return participant.penalty and player.num_correct < 20
 
     @staticmethod
     def vars_for_template(player: Player):
@@ -277,8 +280,8 @@ class Termination(Page):
     def app_after_this_page(player: Player, upcoming_apps):
         return 'survey'
 
-class Results(Page):
 
+class Results(Page):
     @staticmethod
     def is_displayed(player):
         return player.round_number == 5
@@ -300,4 +303,9 @@ class Results(Page):
         )
 
 
-page_sequence = [S3_Instructions, Game, Termination, Results]
+page_sequence = [
+    Instructions,
+    Game,
+    Termination,
+    Results
+]

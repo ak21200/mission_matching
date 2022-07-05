@@ -6,11 +6,11 @@
 
 
     <p><strong>
-        {% if player.app_to_pay == 'stage1_final' %}
+        {% if player.app_to_pay == 'stage1' %}
         Stage 1 was randomly chosen for payment.<br>
 
 
-        {% elif player.app_to_pay == 'stage2_2test' %}
+        {% elif player.app_to_pay == 'stage2' %}
         Stage 2 was randomly chosen for payment.<br>
 
 
@@ -27,7 +27,7 @@
     </p>
 
     <p>
-         {%if player.charity_to_pay == 'stage2_2test' %}
+         {%if player.charity_to_pay == 'stage2' %}
         For the randomly chosen PlayerID called out, charity contributions for Stage 2 will be donated.
 
         {% elif player.charity_to_pay == 'stage3' %}

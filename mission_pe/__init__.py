@@ -13,9 +13,9 @@ class Constants(BaseConstants):
     num_rounds = 1
 
 
-
 class Subsession(BaseSubsession):
     pass
+
 
 def creating_session(subsession: Subsession):
     import itertools
@@ -28,13 +28,11 @@ def creating_session(subsession: Subsession):
         p.penalty = treatment[1]
 
 
-
 class Group(BaseGroup):
     pass
 
 
 class Player(BasePlayer):
-
     penalty = models.BooleanField()
     charity_order = models.BooleanField()
 
@@ -42,10 +40,10 @@ class Player(BasePlayer):
         label="CISWO",
         widget=widgets.RadioSelectHorizontal,
         choices=[
-            [1,'1 (Most preferred charity)'],
+            [1, '1 (Most preferred charity)'],
             [2, '2'],
-            [3,'3'],
-            [4,'4 (Do not support)'],
+            [3, '3'],
+            [4, '4 (Do not support)'],
         ]
     )
 
@@ -79,19 +77,23 @@ class Player(BasePlayer):
             [4, '4 (Do not support)'],
         ]
     )
+
 # PAGES
-class MyPage(Page):
+
+
+class Ranking(Page):
     form_model = 'player'
     form_fields = ['CISWO', 'Ember', 'CARE', 'BPAS']
 
     @staticmethod
     def error_message(player, values):
         print('values is', values)
-        if values['CISWO'] + values['Ember'] + values['CARE'] + values['BPAS'] !=10:
+        if values['CISWO'] + values['Ember'] + values['CARE'] + values['BPAS'] != 10:
             return 'Each charity must have a unique rank. Please check your ranking.'
+
     def error_message(player, values):
         print('values is', values)
-        if values['CISWO']*values['CISWO'] + values['Ember']*values['Ember'] + values['CARE']*values['CARE'] + values['BPAS']*values['BPAS'] !=30:
+        if values['CISWO']*values['CISWO'] + values['Ember']*values['Ember'] + values['CARE']*values['CARE'] + values['BPAS']*values['BPAS'] != 30:
             return 'Each charity must have a unique rank. Please check your ranking.'
 
     def before_next_page(player: Player, timeout_happened):
@@ -103,4 +105,7 @@ class MyPage(Page):
         participant.vars['penalty'] = player.penalty
         participant.vars['charity_order'] = player.charity_order
 
-page_sequence = [MyPage]
+
+page_sequence = [
+    Ranking,
+]

@@ -5,8 +5,16 @@ from os import environ
 
 SESSION_CONFIGS = (
     dict(
-        name='Experiment_V1', app_sequence=['welcome', 'stage1_final', 'mission_pe', 'stage2_2test', 'stage3', 'survey',
-                                         'payment_info'],
+        name='Experiment',
+        app_sequence=[
+            'welcome',
+            'stage1',
+            'mission_pe',
+            'stage2',
+            'stage3',
+            'survey',
+            'payment_info'
+        ],
         num_demo_participants=6
     ),
 )

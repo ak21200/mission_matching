@@ -1,7 +1,6 @@
 from otree.api import *
 
 
-
 class Constants(BaseConstants):
     name_in_url = 'survey'
     players_per_group = None
@@ -29,18 +28,18 @@ class Player(BasePlayer):
     )
     ethnicity = models.IntegerField(
         choices=[
-        [1, 'White'],
-        [2, 'Asian or Asian British'],
-        [3, 'Black, Black British,Caribbean or African'],
-        [4, 'Mixed or multiple ethnic groups'],
-        [5, 'Other'],
-        [6, 'Prefer no to say']
+            [1, 'White'],
+            [2, 'Asian or Asian British'],
+            [3, 'Black, Black British, Caribbean or African'],
+            [4, 'Mixed or multiple ethnic groups'],
+            [5, 'Other'],
+            [6, 'Prefer no to say']
         ],
-        label='Which is your ethinic group?',
+        label='Which is your ethnic group?',
         widget=widgets.RadioSelect,
     )
     employment_status = models.IntegerField(
-        label='Please select your current employment status.',
+        label='What is your current employment status?',
         choices=[
             [1, 'Employed (full-time)'],
             [2, 'Employed (part-time)'],
@@ -58,7 +57,7 @@ class Player(BasePlayer):
             [4, 'Strongly agree']
         ],
         widget=widgets.RadioSelectHorizontal,
-        label= ''
+        label=''
     )
     strength_ember = models.IntegerField(
         choices=[
@@ -125,8 +124,8 @@ class Player(BasePlayer):
             [8, 'Prefer not to say']
         ],
         widget=widgets.RadioSelect,
-        blank= None,
-        initial = None
+        blank=None,
+        initial=None
     )
 
     timeuea = models.IntegerField(
@@ -144,20 +143,24 @@ class Player(BasePlayer):
 
     )
 
-
-
 # FUNCTIONS
 # PAGES
+
+
 class Demographics(Page):
     form_model = 'player'
-    form_fields = ['gender', 'ethnicity', 'employment_status', 'age', 'countryborn', 'countrynow', 'department', 'degree', 'timeuea']
+    form_fields = [
+        'gender', 'ethnicity', 'employment_status', 'age', 'countryborn',
+        'countrynow', 'department', 'degree', 'timeuea'
+    ]
 
 
-
-class Mission_strength(Page):
+class MissionStrength(Page):
     form_model = 'player'
     form_fields = ['strength_ciswo', 'strength_ember', 'strength_care', 'strength_bpas']
 
 
-
-page_sequence = [Mission_strength, Demographics]
+page_sequence = [
+    MissionStrength,
+    Demographics,
+]
