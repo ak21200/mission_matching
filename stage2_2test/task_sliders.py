@@ -13,11 +13,11 @@ SLIDER_MARGIN = 15  # to fit handle and shade
 SLIDER_BBOX = (SLIDER_WIDTH + SLIDER_EXTRA, SLIDER_HEIGHT)
 
 # material design colors
-BACK_COLOR = "#E0E0E0"
-TRACK_COLOR = "#BB86FC60"
-TICK_COLOR = "#6200EE60"
-TARGET_COLOR = "#EE6300"
-CORRECT_COLOR = "#008B00"
+BACK_COLOR = "#FFFFFF"
+TRACK_COLOR = "#e2f5ff"
+TICK_COLOR = "#45bdff"
+TARGET_COLOR = "#b00000"
+CORRECT_COLOR = "#00d600"
 
 
 def generate_layout(params):
@@ -63,7 +63,7 @@ def render_image(layout, targets):
     image = Image.new("RGB", size)
     draw = ImageDraw.Draw(image, "RGBA")
 
-    draw.rectangle((0, 0, size[0], size[1]), fill="#e0e0e0")
+    draw.rectangle((0, 0, size[0], size[1]), fill="#FFFFFF")
 
     for i, target in enumerate(targets):
         x0, y0 = grid[i]  # bbox center
