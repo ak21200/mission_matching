@@ -212,9 +212,11 @@ class Instructions(Page):
 
 class Game(Page):
     template_name = "global/Game.html"
-    timeout_seconds = 90
-
     live_method = play_game
+
+    @staticmethod
+    def get_timeout_seconds(player: Player):
+        return player.session.config['task_seconds']
 
     @staticmethod
     def js_vars(player: Player):

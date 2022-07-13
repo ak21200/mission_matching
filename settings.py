@@ -15,7 +15,10 @@ SESSION_CONFIGS = (
             'survey',
             'payment_info'
         ],
-        num_demo_participants=6
+        num_demo_participants=6,
+        task_seconds=15,
+        stage_index_offset=0,
+        charity_round_offset=0,
     ),
 )
 
@@ -43,6 +46,11 @@ PARTICIPANT_FIELDS = [
     'app_payoffs',
     'charity_donations',
     'rounds',
+    'donation_charity',
+    'donation_stage',
+    'donation_round',
+    'donation_amount',
+    'donation_score',
 ]
 SESSION_FIELDS = ['params']
 

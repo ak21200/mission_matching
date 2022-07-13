@@ -205,17 +205,37 @@ def play_game(player: Player, message: dict):
         }
 
 
+charity_names = {
+    "CISWO": "CISWO (Coal Industry Social Welfare Organisation)",
+    "Ember": "The Crowd: Ember",
+    "CARE": "CARE (Christian Action, Research, and Education)",
+    "BPAS": "BPAS (British Pregnancy Advisory Service)",
+}
+
+
 class Instructions(Page):
     @staticmethod
     def is_displayed(player):
         return player.round_number == 1
 
+    @staticmethod
+    def vars_for_template(player: Player):
+        if player.participant.charity_order:
+            charity = player.participant.vars['charity_rank'][4]
+        else:
+            charity = player.participant.vars['charity_rank'][1]
+        return {
+            'charity_name': charity_names[charity]
+        }
+
 
 class Game(Page):
     template_name = "global/Game.html"
-    timeout_seconds = 15
-
     live_method = play_game
+
+    @staticmethod
+    def get_timeout_seconds(player: Player):
+        return player.session.config['task_seconds']
 
     @staticmethod
     def js_vars(player: Player):
@@ -241,6 +261,9 @@ class Game(Page):
             player.participant.app_payoffs.get('stage3', cu(0)) +
             Constants.earnings_per_round
         )
+        if player.participant.donation_stage == 'stage3' and player.participant.donation_round == player.round_number:
+            player.participant.donation_amount = player.num_correct * cu(0.05)
+            player.participant.donation_score = player.num_correct
 
 
 class Results(Page):
