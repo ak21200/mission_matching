@@ -25,6 +25,7 @@ class Player(BasePlayer):
             [4, 'Prefer not to say']
         ],
         widget=widgets.RadioSelect,
+        blank=True,
     )
     ethnicity = models.IntegerField(
         choices=[
@@ -37,6 +38,7 @@ class Player(BasePlayer):
         ],
         label='Which is your ethnic group?',
         widget=widgets.RadioSelect,
+        blank=True,
     )
     employment_status = models.IntegerField(
         label='What is your current employment status?',
@@ -47,13 +49,14 @@ class Player(BasePlayer):
             [4, 'Unemployed']
         ],
         widget=widgets.RadioSelect,
+        blank=True,
     )
     strength_ciswo = models.IntegerField(
         choices=[
             [0, 'Strongly disagree'],
-            [1, 'Weakly disagree'],
+            [1, 'Somewhat disagree'],
             [2, 'Neither agree nor disagree'],
-            [3, 'Weakly agree'],
+            [3, 'Somewhat agree'],
             [4, 'Strongly agree']
         ],
         widget=widgets.RadioSelectHorizontal,
@@ -62,9 +65,9 @@ class Player(BasePlayer):
     strength_ember = models.IntegerField(
         choices=[
             [0, 'Strongly disagree'],
-            [1, 'Weakly disagree'],
+            [1, 'Somewhat disagree'],
             [2, 'Neither agree nor disagree'],
-            [3, 'Weakly agree'],
+            [3, 'Somewhat agree'],
             [4, 'Strongly agree']
         ],
         widget=widgets.RadioSelectHorizontal,
@@ -73,9 +76,9 @@ class Player(BasePlayer):
     strength_care = models.IntegerField(
         choices=[
             [0, 'Strongly disagree'],
-            [1, 'Weakly disagree'],
+            [1, 'Somewhat disagree'],
             [2, 'Neither agree nor disagree'],
-            [3, 'Weakly agree'],
+            [3, 'Somewhat agree'],
             [4, 'Strongly agree']
         ],
         widget=widgets.RadioSelectHorizontal,
@@ -84,9 +87,9 @@ class Player(BasePlayer):
     strength_bpas = models.IntegerField(
         choices=[
             [0, 'Strongly disagree'],
-            [1, 'Weakly disagree'],
+            [1, 'Somewhat disagree'],
             [2, 'Neither agree nor disagree'],
-            [3, 'Weakly agree'],
+            [3, 'Somewhat agree'],
             [4, 'Strongly agree']
         ],
         widget=widgets.RadioSelectHorizontal,
@@ -124,7 +127,7 @@ class Player(BasePlayer):
             [8, 'Prefer not to say']
         ],
         widget=widgets.RadioSelect,
-        blank=None,
+        blank=True,
         initial=None
     )
 
@@ -140,11 +143,14 @@ class Player(BasePlayer):
         ],
         widget=widgets.RadioSelect,
         blank=True,
-
     )
 
 # FUNCTIONS
 # PAGES
+
+
+class Introduction(Page):
+    pass
 
 
 class Demographics(Page):
@@ -161,6 +167,7 @@ class MissionStrength(Page):
 
 
 page_sequence = [
+    Introduction,
     MissionStrength,
     Demographics,
 ]

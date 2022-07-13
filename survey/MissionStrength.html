@@ -2,20 +2,14 @@
 {% block content %}
 
     <p>
-        All stages are now complete. Please answer the following questions. Remember, data collected is anonymised.
+        Please indicate the extent to which you agree or disagree with the following statements.
     </p>
-
-    <p>
-        Please indicate to what extent do you agree or disagree with the following statements.
-    </p>
-     {% block form_content %}
-
             <div class="container border bg-light p-2 mt-2 mb-2">
                 <div class="mb-3">
 
                     <p>
-                        I support CISWO (Coal Industry Social Welfare Organisation). Your previously assigned rank to this
-                                charity was {% participant.CISWO %}
+                        I support CISWO (Coal Industry Social Welfare Organisation).<br/>
+                        (You previously assigned this charity rank {% participant.CISWO %})
                         {% formfield 'strength_ciswo'%}
                     </p>
                 </div>
@@ -23,7 +17,8 @@
 
             <div class="container border bg-light p-2 mt-2 mb-2">
                 <div class="mb-3">
-                        <p>I support The Crowd:Ember. Your previously assigned rank to this charity was {% participant.Ember %}
+                        <p>I support The Crowd: Ember.<br/>
+                            (You previously assigned this charity rank {% participant.Ember %})
                                  {% formfield 'strength_ember' %}
                         </p>
                 </div>
@@ -31,7 +26,8 @@
 
             <div class="container border bg-light p-2 mt-2 mb-2">
                 <div class="mb-3">
-                        <p>I support CARE (Christian Action, Research, and Education) . Your previously assigned rank to this charity was {% participant.CARE %}
+                        <p>I support CARE (Christian Action, Research, and Education).<br/>
+                            (You previously assigned this charity rank {% participant.CARE %})
                         {% formfield 'strength_care' %}
                         </p>
                 </div>
@@ -39,23 +35,18 @@
 
             <div class="container border bg-light p-2 mt-2 mb-2">
                 <div class="mb-3">
-                        <p>I support BPAS (British Pregnancy Advisory Service) . Your previously assigned rank to this charity was {% participant.BPAS %}
+                        <p>I support BPAS (British Pregnancy Advisory Service).<br/>
+                            (You previously assigned this charity rank {% participant.BPAS %})
                         {% formfield 'strength_bpas' %}
                         </p>
                 </div>
             </div>
-    {% endblock form_content %}
-
-
-    {% next_button %}
-
-    <footer>
-            <hr/>
-            <div class="text-right">
-                <p class="text-muted font-italic">Laboratory for Economic and Decision Research, University of East Anglia
-                    <img src="{% static 'global/uea.png' %}" class="align-content-center ml-3" alt="UEA logo"/>
-                </p>
+    <div class="row justify-content-center">
+        <div class="col-1">
+            <button class="otree-btn-next btn btn-primary">Next</button>
         </div>
-        </footer>
+    </div>
+    {{ include "global/Footer.html" }}
+
 
 {% endblock %}
