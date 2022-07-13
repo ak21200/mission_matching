@@ -81,12 +81,12 @@ class View {
     drawHandle(x, y, state) {
         // hover area
         if (state.hover) {
-            this.canvas.fillStyle = "rgba(98, 0, 238, 0.04)";
+            this.canvas.fillStyle = "rgba(176, 0, 0, 0.04)";
             this.canvas.beginPath();
             this.canvas.arc(x, y, 20, 0, 2 * Math.PI);
             this.canvas.fill();
         } else if (state.dragged) {
-            this.canvas.fillStyle = "rgba(98, 0, 238, 0.24)";
+            this.canvas.fillStyle = "rgba(176, 0, 0, 0.5)";
             this.canvas.beginPath();
             this.canvas.arc(x, y, 20, 0, 2 * Math.PI);
             this.canvas.fill();
@@ -94,11 +94,11 @@ class View {
 
         // knob
         if (state.correct) {
-            this.canvas.fillStyle = "rgb(0, 139, 0)";
+            this.canvas.fillStyle = "rgb(0, 146, 227)";
         } else if (state.dragged) {
-            this.canvas.fillStyle = "rgba(98, 0, 238, 0.5)";
+            this.canvas.fillStyle = "rgba(176, 0, 0, 1)";
         } else {
-            this.canvas.fillStyle = "rgb(98, 0, 238)";
+            this.canvas.fillStyle = "rgb(176, 0, 0)";
         }
         this.canvas.beginPath();
         this.canvas.arc(x, y, 10, 0, 2 * Math.PI);
