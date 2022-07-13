@@ -7,7 +7,7 @@ SESSION_CONFIGS = (
     dict(
         name='Experiment',
         app_sequence=[
-            'welcome',
+            # 'welcome',
             'stage1',
             'mission_pe',
             'stage2',

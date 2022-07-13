@@ -15,6 +15,7 @@ class Constants(BaseConstants):
     name_in_url = "stage1"
     players_per_group = None
     num_rounds = 5
+    earnings_per_round = cu(1.50)
 
 
 class Subsession(BaseSubsession):
@@ -45,7 +46,7 @@ class Group(BaseGroup):
 
 class Player(BasePlayer):
     iteration = models.IntegerField(initial=0)
-
+    participated = models.IntegerField(initial=0)
     num_correct = models.IntegerField(initial=0)
     potential_payoff = models.CurrencyField()
 
@@ -231,34 +232,28 @@ class Game(Page):
     @staticmethod
     def before_next_page(player: Player, timeout_happened):
         puzzle = get_current_puzzle(player)
-
         if puzzle and puzzle.response_timestamp:
             player.num_correct = puzzle.num_correct
-        player.participant.vars['num_correct_s1_' + str(player.round_number)] = player.num_correct
+        player.participated = 1
+        player.participant.app_payoffs['stage1'] = (
+            player.participant.app_payoffs.get('stage1', cu(0)) +
+            Constants.earnings_per_round
+        )
 
 
 class Results(Page):
+    template_name = "global/Results.html"
+
     @staticmethod
     def is_displayed(player):
         return player.round_number == 5
 
     @staticmethod
     def vars_for_template(player: Player):
-            participant = player.participant
-            potential_payoff = cu(7.5)
-            player.potential_payoff = potential_payoff
-            participant.app_payoffs['stage1'] = potential_payoff
-
-            participant.rounds['stage1'] = player.round_number
-
-            return dict(
-                num_correct_s1_1=participant.vars['num_correct_s1_1'],
-                num_correct_s1_2=participant.vars['num_correct_s1_2'],
-                num_correct_s1_3=participant.vars['num_correct_s1_3'],
-                num_correct_s1_4=participant.vars['num_correct_s1_4'],
-                num_correct_s1_5=participant.vars['num_correct_s1_5']
-            )
-
+        return {
+            'termination': False,
+            'potential_payoff': player.participant.app_payoffs['stage1'],
+        }
 
 
 page_sequence = [

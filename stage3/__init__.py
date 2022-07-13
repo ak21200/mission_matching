@@ -16,6 +16,7 @@ class Constants(BaseConstants):
     name_in_url = 'stage3'
     players_per_group = None
     num_rounds = 5
+    earnings_per_round = cu(1.50)
 
 
 class Subsession(BaseSubsession):
@@ -46,7 +47,7 @@ class Group(BaseGroup):
 
 class Player(BasePlayer):
     iteration = models.IntegerField(initial=0)
-
+    participated = models.IntegerField(initial=0)
     num_correct = models.IntegerField(initial=0)
     potential_payoff = models.CurrencyField()
 
@@ -212,7 +213,7 @@ class Instructions(Page):
 
 class Game(Page):
     template_name = "global/Game.html"
-    timeout_seconds = 90
+    timeout_seconds = 15
 
     live_method = play_game
 
@@ -235,78 +236,39 @@ class Game(Page):
 
         if puzzle and puzzle.response_timestamp:
             player.num_correct = puzzle.num_correct
-        player.participant.vars['num_correct_s3_' + str(player.round_number)] = player.num_correct
-
-
-class Termination(Page):
-    @staticmethod
-    def is_displayed(player: Player):
-        participant = player.participant
-        return participant.penalty and player.num_correct < 20
-
-    @staticmethod
-    def vars_for_template(player: Player):
-        participant = player.participant
-        potential_payoff = cu(1.5*player.round_number)
-        player.potential_payoff = potential_payoff
-        participant.app_payoffs['stage3'] = potential_payoff
-        participant.rounds['stage3'] = player.round_number
-
-        num_correct_s3_1 = -1
-        num_correct_s3_2 = -1
-        num_correct_s3_3 = -1
-        num_correct_s3_4 = -1
-        num_correct_s3_5 = -1
-
-        if player.round_number >= 1:
-            num_correct_s3_1 = participant.vars['num_correct_s3_1']
-        elif player.round_number >= 2:
-            num_correct_s3_2 = participant.vars['num_correct_s3_2']
-        elif player.round_number >= 3:
-            num_correct_s3_3 = participant.vars['num_correct_s3_3']
-        elif player.round_number >= 4:
-            num_correct_s3_4 = participant.vars['num_correct_s3_4']
-        elif player.round_number >= 5:
-            num_correct_s3_5 = participant.vars['num_correct_s3_5']
-
-        return dict(
-            num_correct_s3_1=num_correct_s3_1,
-            num_correct_s3_2=num_correct_s3_2,
-            num_correct_s3_3=num_correct_s3_3,
-            num_correct_s3_4=num_correct_s3_4,
-            num_correct_s3_5=num_correct_s3_5
+        player.participated = 1
+        player.participant.app_payoffs['stage3'] = (
+            player.participant.app_payoffs.get('stage3', cu(0)) +
+            Constants.earnings_per_round
         )
-
-    @staticmethod
-    def app_after_this_page(player: Player, upcoming_apps):
-        return 'survey'
 
 
 class Results(Page):
+    template_name = "global/Results.html"
+
     @staticmethod
-    def is_displayed(player):
-        return player.round_number == 5
+    def is_displayed(player: Player):
+        participant = player.participant
+        return (
+            player.round_number == 5 or
+            (participant.penalty and player.num_correct < 20)
+        )
 
     @staticmethod
     def vars_for_template(player: Player):
-        participant = player.participant
-        potential_payoff = cu(7.5)
-        player.potential_payoff = potential_payoff
-        participant.app_payoffs['stage3'] = potential_payoff
-        participant.rounds['stage3'] = player.round_number
+        return {
+            'termination': player.participant.penalty and player.num_correct < 20,
+            'potential_payoff': player.participant.app_payoffs['stage3'],
+        }
 
-        return dict(
-            num_correct_s3_1=participant.vars['num_correct_s3_1'],
-            num_correct_s3_2=participant.vars['num_correct_s3_2'],
-            num_correct_s3_3=participant.vars['num_correct_s3_3'],
-            num_correct_s3_4=participant.vars['num_correct_s3_4'],
-            num_correct_s3_5=participant.vars['num_correct_s3_5']
-        )
+    @staticmethod
+    def app_after_this_page(player: Player, upcoming_apps):
+        if player.participant.penalty and player.num_correct < 20:
+            return 'survey'
 
 
 page_sequence = [
     Instructions,
     Game,
-    Termination,
-    Results
+    Results,
 ]
