@@ -7,7 +7,7 @@ SESSION_CONFIGS = (
     dict(
         name='Experiment',
         app_sequence=[
-            # 'welcome',
+            'welcome',
             'stage1',
             'mission_pe',
             'stage2',
@@ -16,7 +16,7 @@ SESSION_CONFIGS = (
             'payment_info'
         ],
         num_demo_participants=6,
-        task_seconds=15,
+        task_seconds=90,
         stage_index_offset=0,
         charity_round_offset=0,
     ),
