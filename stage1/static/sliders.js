@@ -86,7 +86,7 @@ class View {
             this.canvas.arc(x, y, 20, 0, 2 * Math.PI);
             this.canvas.fill();
         } else if (state.dragged) {
-            this.canvas.fillStyle = "rgba(176, 0, 0, 0.5)";
+            this.canvas.fillStyle = "rgba(176, 0, 0, 0.24)";
             this.canvas.beginPath();
             this.canvas.arc(x, y, 20, 0, 2 * Math.PI);
             this.canvas.fill();
@@ -96,7 +96,7 @@ class View {
         if (state.correct) {
             this.canvas.fillStyle = "rgb(0, 146, 227)";
         } else if (state.dragged) {
-            this.canvas.fillStyle = "rgba(176, 0, 0, 1)";
+            this.canvas.fillStyle = "rgba(176, 0, 0, 0.5)";
         } else {
             this.canvas.fillStyle = "rgb(176, 0, 0)";
         }
