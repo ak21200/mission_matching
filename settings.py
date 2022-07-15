@@ -16,7 +16,103 @@ SESSION_CONFIGS = (
             'payment_info'
         ],
         num_demo_participants=6,
-        task_seconds=90,
+        task_seconds=15,
+        stage_index_offset=0,
+        charity_round_offset=0,
+    ),
+dict(
+        name='Experiment_V4',
+        app_sequence=[
+            'welcome',
+            'stage1',
+            'mission_pe',
+            'stage2',
+            'stage3',
+            'survey',
+            'payment_info_4'
+        ],
+        num_demo_participants=6,
+        task_seconds=15,
+        stage_index_offset=0,
+        charity_round_offset=0,
+    ),
+dict(
+        name='Experiment_V5',
+        app_sequence=[
+            'welcome',
+            'stage1',
+            'mission_pe',
+            'stage2',
+            'stage3',
+            'survey',
+            'payment_info_5'
+        ],
+        num_demo_participants=6,
+        task_seconds=15,
+        stage_index_offset=0,
+        charity_round_offset=0,
+    ),
+dict(
+        name='Experiment_V6',
+        app_sequence=[
+            'welcome',
+            'stage1',
+            'mission_pe',
+            'stage2',
+            'stage3',
+            'survey',
+            'payment_info_6'
+        ],
+        num_demo_participants=6,
+        task_seconds=15,
+        stage_index_offset=0,
+        charity_round_offset=0,
+    ),
+dict(
+        name='Experiment_V7',
+        app_sequence=[
+            'welcome',
+            'stage1',
+            'mission_pe',
+            'stage2',
+            'stage3',
+            'survey',
+            'payment_info_7'
+        ],
+        num_demo_participants=6,
+        task_seconds=15,
+        stage_index_offset=0,
+        charity_round_offset=0,
+    ),
+dict(
+        name='Experiment_V8',
+        app_sequence=[
+            'welcome',
+            'stage1',
+            'mission_pe',
+            'stage2',
+            'stage3',
+            'survey',
+            'payment_info_8'
+        ],
+        num_demo_participants=6,
+        task_seconds=15,
+        stage_index_offset=0,
+        charity_round_offset=0,
+    ),
+dict(
+        name='Experiment_V9',
+        app_sequence=[
+            'welcome',
+            'stage1',
+            'mission_pe',
+            'stage2',
+            'stage3',
+            'survey',
+            'payment_info_9'
+        ],
+        num_demo_participants=6,
+        task_seconds=15,
         stage_index_offset=0,
         charity_round_offset=0,
     ),
@@ -44,13 +140,10 @@ PARTICIPANT_FIELDS = [
     'charity_order',
     'is_dropout',
     'app_payoffs',
-    'charity_donations',
+    'stage_donation',
     'rounds',
+    'app_to_pay',
     'donation_charity',
-    'donation_stage',
-    'donation_round',
-    'donation_amount',
-    'donation_score',
 ]
 SESSION_FIELDS = ['params']
 

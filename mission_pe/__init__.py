@@ -106,20 +106,8 @@ class Ranking(Page):
         participant.vars['charity_rank'][player.CARE] = "CARE"
         participant.vars['charity_rank'][player.BPAS] = "BPAS"
 
-        if player.id_in_group % 2 == 0:
-            participant.donation_stage = "stage2"
-            if player.charity_order:
-                participant.donation_charity = participant.vars['charity_rank'][1]
-            else:
-                participant.donation_charity = participant.vars['charity_rank'][4]
-        else:
-            participant.donation_stage = "stage3"
-            if player.charity_order:
-                participant.donation_charity = participant.vars['charity_rank'][4]
-            else:
-                participant.donation_charity = participant.vars['charity_rank'][1]
-        participant.donation_round = (player.id_in_group - 1) % 2 + 1
-        participant.donation_amount = cu(0.0)
+
+
 
 page_sequence = [
     Ranking,

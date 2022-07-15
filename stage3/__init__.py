@@ -27,6 +27,7 @@ def creating_session(subsession: Subsession):
     for p in subsession.get_players():
         p.participant.app_payoffs = {}
         p.participant.rounds = {}
+        p.participant.stage_donation = {}
 
     session = subsession.session
     defaults = dict(
@@ -50,6 +51,7 @@ class Player(BasePlayer):
     participated = models.IntegerField(initial=0)
     num_correct = models.IntegerField(initial=0)
     potential_payoff = models.CurrencyField()
+    donation_amount = models.CurrencyField()
 
 # puzzle-specific stuff
 
@@ -261,9 +263,11 @@ class Game(Page):
             player.participant.app_payoffs.get('stage3', cu(0)) +
             Constants.earnings_per_round
         )
-        if player.participant.donation_stage == 'stage3' and player.participant.donation_round == player.round_number:
-            player.participant.donation_amount = player.num_correct * cu(0.05)
-            player.participant.donation_score = player.num_correct
+        player.donation_amount = player.num_correct * cu(0.05)
+        player.participant.stage_donation['stage3'] = (
+                player.participant.stage_donation.get('stage3', cu(0)) +
+                player.donation_amount
+        )
 
 
 class Results(Page):

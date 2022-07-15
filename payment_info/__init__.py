@@ -16,10 +16,9 @@ class Group(BaseGroup):
 
 
 class Player(BasePlayer):
-    app_to_pay = models.StringField()
+    donation_amount = models.IntegerField()
     charity_to_pay = models.StringField()
     round_to_pay = models.IntegerField()
-
 
 # FUNCTIONS
 # PAGES
@@ -34,11 +33,18 @@ charity_names = {
 class PaymentInfo(Page):
     @staticmethod
     def vars_for_template(player: Player):
+        participant = player.participant
+        participant.payoff = participant.app_payoffs['stage2']
+        participant.donation_charity = participant.vars['charity_rank'][1]
         return {
             'charity_name': charity_names[player.participant.donation_charity],
         }
 
+class ResultsWaitPage(WaitPage):
+    body_text = "Please wait while payments are being calculated"
+    wait_for_all_players = True
 
 page_sequence = [
+    ResultsWaitPage,
     PaymentInfo
 ]

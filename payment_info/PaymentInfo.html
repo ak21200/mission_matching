@@ -3,40 +3,36 @@
  {% block title %}Summary{% endblock %}
     {% block content %}
 
-    <h4>Your earnings</h4>
-    <p>
-        {% if player.app_to_pay == 'stage1' %}
-        Stage 1 has been randomly chosen to determine your earnings for the session.<br>
+        <h4>Your earnings</h4>
+        <p>
+            Stage 2 has been randomly chosen to determine your earnings for the session.<br>
+            Your earnings from that stage were <strong>{{ player.participant.app_payoffs.stage2 }}</strong>.
+        </p>
 
-        {% elif player.app_to_pay == 'stage2' %}
-        Stage 2 has been randomly chosen to determine your earnings for the session.<br>
+        <h4>Charitable donations</h4>
+        <p>
+            {{ if player.id_in_group == 1}}
+            Your sliders completed in Stage 2 for <strong> {{ charity_name }}</strong> have been selected for donation.<br/>
+            A corresponding donation of <strong>{{ player.participant.stage_donation.stage2 }}</strong> will therefore be made.
 
-        {% elif player.app_to_pay == 'stage3' %}
-        Stage 3 has been randomly chosen to determine your earnings for the session.<br>
+            <br/>
 
-        {% endif %}
-        Your earnings from that stage were <strong>{{ participant.payoff }}</strong>.
-    </p>
 
-    <h4>Charitable donations</h4>
-    <p>
-        Your sliders completed for <strong>{{ charity_name }}</strong> in
-        round {{ participant.donation_round }} have been selected to generate a donation.<br/>
-        You completed <strong>{{ participant.donation_score }}</strong> sliders in that round,
-        and a corresponding donation of <strong>{{ participant.donation_amount }}</strong> will therefore be made.
-        <br/>
-        After all sessions of this experiment are completed, we will send out an email to all participants
-        with the details of the donations made.
-    </p>
+            {{else}}
+            You have not been chosen for the charity donation.<br>
+            ______ amount was donated to ____________ charity.
 
-    <h4>Next steps</h4>
-    <p>
-        Please raise your hand and an experimenter will come round to you.
-    </p>
+            {{endif}}
+        </p>
 
-     <p>
-        Thank you for participating in today's experiment!  We hope to see you at another experiment at LEDR soon.
-    </p>
+        <h4>Next steps</h4>
+        <p>
+            Please raise your hand and an experimenter will come round to you.
+        </p>
 
-    {{ include "global/Footer.html" }}
-{% endblock %}
+         <p>
+            Thank you for participating in today's experiment!  We hope to see you at another experiment at LEDR soon.
+        </p>
+
+        {{ include "global/Footer.html" }}
+    {% endblock %}
