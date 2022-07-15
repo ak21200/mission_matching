@@ -2,7 +2,7 @@
 {% block content %}
 
     <p>
-        For Stage 2, you have been assigned as your charity <strong>{{ charity_name }}</strong>,
+        For Stage 3, you have been assigned as your charity <strong>{{ charity_name }}</strong>,
         {% if participant.charity_order %}
             which is the charity you indicated you <strong>preferred the least</strong>.
         {% else %}
@@ -12,8 +12,10 @@
 
     <p>
         Every slider completed in this stage will result in a potential <strong>£0.05</strong> donation to this charity.
-        At the end of the experiment, we will choose one round at random, and the corresponding donation resulting
-        from the sliders you completed in that round will be donated.
+        One participant and one stage will randomly be chosen, and the corresponding donation resulting from all rounds
+        in the chosen stage for the chosen participant will be donated. At the end of the experiment, you will be
+        informed whether you were chosen, the amount being donated and the charity receiving the donation. The
+        donation are in addition to your earnings and not deducted from them.
     </p>
 
     <p>
@@ -23,11 +25,14 @@
 
     {% if participant.penalty %}
             <p>
-                However, if you complete fewer than 20 sliders in a round, Stage 3 will terminate for you.
+                However, if you complete <strong>fewer than 20 sliders in a round, Stage 3 will terminate for you.</strong>
                 You will not participate in the remaining rounds of Stage 3, and will not receive payment
                 for those rounds. You will be paid only for the rounds you have completed.
             </p>
     {% endif %}
+ <p>
+        How many sliders you complete is upto you. You will progress to the survey when Stage 3 ends.
+ </p>
 
     {{ include "global/ButtonNext.html" with button_text="Begin Stage 3" }}
     {{ include "global/Footer.html" }}

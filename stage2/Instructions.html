@@ -11,9 +11,11 @@
     </p>
 
     <p>
-        Every slider completed in this stage will result in a potential <strong>£0.05</strong> donation to this charity.
-        At the end of the experiment, we will choose one round at random, and the corresponding donation resulting
-        from the sliders you completed in that round will be donated.
+        Every slider correctly completed in this stage will result in a potential <strong>£0.05</strong> donation to this charity.
+        One participant and one stage will randomly be chosen, and the corresponding donation resulting from all rounds
+        in the chosen stage for the chosen participant will be donated. At the end of the experiment, you will be
+        informed whether you were chosen, the amount being donated and the charity receiving the donation. The
+        donation are in addition to your earnings and not deducted from them.
     </p>
 
     <p>
@@ -23,11 +25,16 @@
 
     {% if participant.penalty %}
             <p>
-                However, if you complete fewer than 20 sliders in a round, Stage 2 will terminate for you.
+                However, if you complete <strong>fewer than 20 sliders correctly in a round, Stage 2 will terminate for you</strong>.
                 You will not participate in the remaining rounds of Stage 2, and will not receive payment
                 for those rounds. You will be paid only for the rounds you have completed.
+
             </p>
     {% endif %}
+
+    <p>
+        How many sliders you complete is upto you. You will progress to Stage 3 when Stage 2 ends.
+    </p>
 
     {{ include "global/ButtonNext.html" with button_text="Begin Stage 2" }}
     {{ include "global/Footer.html" }}
