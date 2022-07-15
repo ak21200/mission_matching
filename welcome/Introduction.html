@@ -15,11 +15,14 @@
     </p>
 
     <p>
-        The computer will choose one stage at random at the end of the experiment to
+        A dice will choose one stage at random to
         determine your earnings for the experiment.
     </p>
 
-    {{ include "global/ButtonIfDemo.html" }}
+    <p>
+        Click on (next) to proceed to Stage 1 Instructions.
+    </p>
+    {{ include "global/ButtonNext.html" with button_text="Next" }}
     {{ include "global/Footer.html" }}
 
 {% endblock %}
