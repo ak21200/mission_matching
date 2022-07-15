@@ -27,7 +27,20 @@ class Player(BasePlayer):
 
 
 # PAGES
-class MyPage(Page):
+class Splash(Page):
     pass
 
-page_sequence = [MyPage]
+
+class Welcome(Page):
+    pass
+
+
+class Introduction(Page):
+    pass
+
+
+page_sequence = [
+    Splash,
+    Welcome,
+    Introduction,
+]

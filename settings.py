@@ -5,9 +5,20 @@ from os import environ
 
 SESSION_CONFIGS = (
     dict(
-        name='Experiment_V1', app_sequence=['welcome', 'stage1_final', 'mission_pe', 'stage2_2test', 'stage3', 'survey',
-                                         'payment_info'],
-        num_demo_participants=6
+        name='Experiment',
+        app_sequence=[
+            'welcome',
+            'stage1',
+            'mission_pe',
+            'stage2',
+            'stage3',
+            'survey',
+            'payment_info'
+        ],
+        num_demo_participants=6,
+        task_seconds=90,
+        stage_index_offset=0,
+        charity_round_offset=0,
     ),
 )
 
@@ -35,6 +46,11 @@ PARTICIPANT_FIELDS = [
     'app_payoffs',
     'charity_donations',
     'rounds',
+    'donation_charity',
+    'donation_stage',
+    'donation_round',
+    'donation_amount',
+    'donation_score',
 ]
 SESSION_FIELDS = ['params']
 

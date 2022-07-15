@@ -1,57 +1,42 @@
 
 
- {% block title %}Thank you for participating!{% endblock %}
+ {% block title %}Summary{% endblock %}
     {% block content %}
 
+    <h4>Your earnings</h4>
+    <p>
+        {% if player.app_to_pay == 'stage1' %}
+        Stage 1 has been randomly chosen to determine your earnings for the session.<br>
 
-
-    <p><strong>
-        {% if player.app_to_pay == 'stage1_final' %}
-        Stage 1 was randomly chosen for payment.<br>
-
-
-        {% elif player.app_to_pay == 'stage2_2test' %}
-        Stage 2 was randomly chosen for payment.<br>
-
+        {% elif player.app_to_pay == 'stage2' %}
+        Stage 2 has been randomly chosen to determine your earnings for the session.<br>
 
         {% elif player.app_to_pay == 'stage3' %}
-        Stage 3 was randomly chosen for payment.<br>
-
-
-        {% endif %}
-    </strong></p>
-
-    <p>
-        Payment per round = {% 1.5 %}<br>
-        <strong>Therefore payment  = {% participant.payoff %} </strong>
-    </p>
-
-    <p>
-         {%if player.charity_to_pay == 'stage2_2test' %}
-        For the randomly chosen PlayerID called out, charity contributions for Stage 2 will be donated.
-
-        {% elif player.charity_to_pay == 'stage3' %}
-        For the randomly chosen PlayerID called out, charity contributions for Stage 3 will be donated.
+        Stage 3 has been randomly chosen to determine your earnings for the session.<br>
 
         {% endif %}
+        Your earnings from that stage were <strong>{{ participant.payoff }}</strong>.
     </p>
 
+    <h4>Charitable donations</h4>
     <p>
-        You will now be called to collect your payment. Please remain seated until your ID is called. Then take
-                your number card, and proceed to the cashier.
+        Your sliders completed for <strong>{{ charity_name }}</strong> in
+        round {{ participant.donation_round }} have been selected to generate a donation.<br/>
+        You completed <strong>{{ participant.donation_score }}</strong> sliders in that round,
+        and a corresponding donation of <strong>{{ participant.donation_amount }}</strong> will therefore be made.
+        <br/>
+        After all sessions of this experiment are completed, we will send out an email to all participants
+        with the details of the donations made.
     </p>
 
+    <h4>Next steps</h4>
+    <p>
+        Please raise your hand and an experimenter will come round to you.
+    </p>
 
      <p>
         Thank you for participating in today's experiment!  We hope to see you at another experiment at LEDR soon.
     </p>
 
-<footer>
-            <hr/>
-            <div class="text-right">
-                <p class="text-muted font-italic">Laboratory for Economic and Decision Research, University of East Anglia
-                    <img src="{% static 'global/uea.png' %}" class="align-content-center ml-3" alt="UEA logo"/>
-                </p>
-        </div>
-        </footer>
+    {{ include "global/Footer.html" }}
 {% endblock %}

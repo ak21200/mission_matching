@@ -1,0 +1,35 @@
+{% block title %}Stage 2: Instructions{% endblock %}
+{% block content %}
+
+    <p>
+        For Stage 2, you have been assigned as your charity <strong>{{ charity_name }}</strong>,
+        {% if participant.charity_order %}
+            which is the charity you indicated you <strong>preferred the most</strong>.
+        {% else %}
+            which is the charity you indicated you <strong>preferred the least</strong>.
+        {% endif %}
+    </p>
+
+    <p>
+        Every slider completed in this stage will result in a potential <strong>£0.05</strong> donation to this charity.
+        At the end of the experiment, we will choose one round at random, and the corresponding donation resulting
+        from the sliders you completed in that round will be donated.
+    </p>
+
+    <p>
+        If this stage is chosen to determine your earnings for the experiment, you will receive <strong>£1.50</strong> for each round
+        you complete.
+    </p>
+
+    {% if participant.penalty %}
+            <p>
+                However, if you complete fewer than 20 sliders in a round, Stage 2 will terminate for you.
+                You will not participate in the remaining rounds of Stage 2, and will not receive payment
+                for those rounds. You will be paid only for the rounds you have completed.
+            </p>
+    {% endif %}
+
+    {{ include "global/ButtonNext.html" with button_text="Begin Stage 2" }}
+    {{ include "global/Footer.html" }}
+
+{% endblock %}

@@ -5,22 +5,23 @@ import json
 from otree import settings
 from otree.api import *
 
-from .image_utils import encode_image
-from . import task_sliders
+from sliders.image_utils import encode_image
+from sliders import task_sliders
 
 doc = """
 """
+
 
 class Constants(BaseConstants):
     name_in_url = 'stage3'
     players_per_group = None
     num_rounds = 5
-
-
+    earnings_per_round = cu(1.50)
 
 
 class Subsession(BaseSubsession):
     pass
+
 
 def creating_session(subsession: Subsession):
     for p in subsession.get_players():
@@ -46,7 +47,7 @@ class Group(BaseGroup):
 
 class Player(BasePlayer):
     iteration = models.IntegerField(initial=0)
-
+    participated = models.IntegerField(initial=0)
     num_correct = models.IntegerField(initial=0)
     potential_payoff = models.CurrencyField()
 
@@ -203,15 +204,38 @@ def play_game(player: Player, message: dict):
             )
         }
 
-class S3_Instructions(Page):
+
+charity_names = {
+    "CISWO": "CISWO (Coal Industry Social Welfare Organisation)",
+    "Ember": "The Crowd: Ember",
+    "CARE": "CARE (Christian Action, Research, and Education)",
+    "BPAS": "BPAS (British Pregnancy Advisory Service)",
+}
+
+
+class Instructions(Page):
     @staticmethod
     def is_displayed(player):
         return player.round_number == 1
 
-class Game(Page):
-    timeout_seconds = 90
+    @staticmethod
+    def vars_for_template(player: Player):
+        if player.participant.charity_order:
+            charity = player.participant.vars['charity_rank'][4]
+        else:
+            charity = player.participant.vars['charity_rank'][1]
+        return {
+            'charity_name': charity_names[charity]
+        }
 
+
+class Game(Page):
+    template_name = "global/Game.html"
     live_method = play_game
+
+    @staticmethod
+    def get_timeout_seconds(player: Player):
+        return player.session.config['task_seconds']
 
     @staticmethod
     def js_vars(player: Player):
@@ -232,72 +256,42 @@ class Game(Page):
 
         if puzzle and puzzle.response_timestamp:
             player.num_correct = puzzle.num_correct
-        player.participant.vars['num_correct_s3_' + str(player.round_number)] = player.num_correct
+        player.participated = 1
+        player.participant.app_payoffs['stage3'] = (
+            player.participant.app_payoffs.get('stage3', cu(0)) +
+            Constants.earnings_per_round
+        )
+        if player.participant.donation_stage == 'stage3' and player.participant.donation_round == player.round_number:
+            player.participant.donation_amount = player.num_correct * cu(0.05)
+            player.participant.donation_score = player.num_correct
 
-class Termination(Page):
+
+class Results(Page):
+    template_name = "global/Results.html"
+
     @staticmethod
     def is_displayed(player: Player):
         participant = player.participant
-        return participant.penalty == True and player.num_correct < 20
+        return (
+            player.round_number == 5 or
+            (participant.penalty and player.num_correct < 20)
+        )
 
     @staticmethod
     def vars_for_template(player: Player):
-        participant = player.participant
-        potential_payoff = cu(1.5*player.round_number)
-        player.potential_payoff = potential_payoff
-        participant.app_payoffs['stage3'] = potential_payoff
-        participant.rounds['stage3'] = player.round_number
-
-        num_correct_s3_1 = -1
-        num_correct_s3_2 = -1
-        num_correct_s3_3 = -1
-        num_correct_s3_4 = -1
-        num_correct_s3_5 = -1
-
-        if player.round_number >= 1:
-            num_correct_s3_1 = participant.vars['num_correct_s3_1']
-        elif player.round_number >= 2:
-            num_correct_s3_2 = participant.vars['num_correct_s3_2']
-        elif player.round_number >= 3:
-            num_correct_s3_3 = participant.vars['num_correct_s3_3']
-        elif player.round_number >= 4:
-            num_correct_s3_4 = participant.vars['num_correct_s3_4']
-        elif player.round_number >= 5:
-            num_correct_s3_5 = participant.vars['num_correct_s3_5']
-
-        return dict(
-            num_correct_s3_1=num_correct_s3_1,
-            num_correct_s3_2=num_correct_s3_2,
-            num_correct_s3_3=num_correct_s3_3,
-            num_correct_s3_4=num_correct_s3_4,
-            num_correct_s3_5=num_correct_s3_5
-        )
+        return {
+            'termination': player.participant.penalty and player.num_correct < 20,
+            'potential_payoff': player.participant.app_payoffs['stage3'],
+        }
 
     @staticmethod
     def app_after_this_page(player: Player, upcoming_apps):
-        return 'survey'
-
-class Results(Page):
-
-    @staticmethod
-    def is_displayed(player):
-        return player.round_number == 5
-
-    @staticmethod
-    def vars_for_template(player: Player):
-        participant = player.participant
-        potential_payoff = cu(7.5)
-        player.potential_payoff = potential_payoff
-        participant.app_payoffs['stage3'] = potential_payoff
-        participant.rounds['stage3'] = player.round_number
-
-        return dict(
-            num_correct_s3_1=participant.vars['num_correct_s3_1'],
-            num_correct_s3_2=participant.vars['num_correct_s3_2'],
-            num_correct_s3_3=participant.vars['num_correct_s3_3'],
-            num_correct_s3_4=participant.vars['num_correct_s3_4'],
-            num_correct_s3_5=participant.vars['num_correct_s3_5']
-        )
+        if player.participant.penalty and player.num_correct < 20:
+            return 'survey'
 
 
-page_sequence = [S3_Instructions, Game, Termination, Results]
+page_sequence = [
+    Instructions,
+    Game,
+    Results,
+]

@@ -13,9 +13,9 @@ class Constants(BaseConstants):
     num_rounds = 1
 
 
-
 class Subsession(BaseSubsession):
     pass
+
 
 def creating_session(subsession: Subsession):
     import itertools
@@ -28,72 +28,69 @@ def creating_session(subsession: Subsession):
         p.penalty = treatment[1]
 
 
-
 class Group(BaseGroup):
     pass
 
 
 class Player(BasePlayer):
-
     penalty = models.BooleanField()
     charity_order = models.BooleanField()
 
     CISWO = models.IntegerField(
-        label="CISWO",
+        label="",
         widget=widgets.RadioSelectHorizontal,
         choices=[
-            [1,'1 (Most preferred charity)'],
+            [1, '1 (Most preferred)'],
             [2, '2'],
-            [3,'3'],
-            [4,'4 (Do not support)'],
+            [3, '3'],
+            [4, '4 (Least preferred)'],
         ]
     )
 
     Ember = models.IntegerField(
-        label="The Crowd: Ember",
+        label="",
         widget=widgets.RadioSelectHorizontal,
         choices=[
-            [1, '1 (Most preferred charity)'],
+            [1, '1 (Most preferred)'],
             [2, '2'],
             [3, '3'],
-            [4, '4 (Do not support)'],
+            [4, '4 (Least preferred)'],
         ]
     )
     CARE = models.IntegerField(
-        label="CARE",
+        label="",
         widget=widgets.RadioSelectHorizontal,
         choices=[
-            [1, '1 (Most preferred charity)'],
+            [1, '1 (Most preferred)'],
             [2, '2'],
             [3, '3'],
-            [4, '4 (Do not support)'],
+            [4, '4 (Least preferred)'],
         ]
     )
     BPAS = models.IntegerField(
-        label="BPAS",
+        label="",
         widget=widgets.RadioSelectHorizontal,
         choices=[
-            [1, '1 (Most preferred charity)'],
+            [1, '1 (Most preferred)'],
             [2, '2'],
             [3, '3'],
-            [4, '4 (Do not support)'],
+            [4, '4 (Least preferred)'],
         ]
     )
+
 # PAGES
-class MyPage(Page):
+
+
+class Ranking(Page):
     form_model = 'player'
     form_fields = ['CISWO', 'Ember', 'CARE', 'BPAS']
 
     @staticmethod
     def error_message(player, values):
-        print('values is', values)
-        if values['CISWO'] + values['Ember'] + values['CARE'] + values['BPAS'] !=10:
-            return 'Each charity must have a unique rank. Please check your ranking.'
-    def error_message(player, values):
-        print('values is', values)
-        if values['CISWO']*values['CISWO'] + values['Ember']*values['Ember'] + values['CARE']*values['CARE'] + values['BPAS']*values['BPAS'] !=30:
-            return 'Each charity must have a unique rank. Please check your ranking.'
+        if set(values.values()) != set([1, 2, 3, 4]):
+            return 'Each charity must have a unique ranking.  Please review your rankings below.'
 
+    @staticmethod
     def before_next_page(player: Player, timeout_happened):
         participant = player.participant
         participant.vars['CISWO'] = player.CISWO
@@ -103,4 +100,27 @@ class MyPage(Page):
         participant.vars['penalty'] = player.penalty
         participant.vars['charity_order'] = player.charity_order
 
-page_sequence = [MyPage]
+        participant.vars['charity_rank'] = {}
+        participant.vars['charity_rank'][player.CISWO] = "CISWO"
+        participant.vars['charity_rank'][player.Ember] = "Ember"
+        participant.vars['charity_rank'][player.CARE] = "CARE"
+        participant.vars['charity_rank'][player.BPAS] = "BPAS"
+
+        if player.id_in_group % 2 == 0:
+            participant.donation_stage = "stage2"
+            if player.charity_order:
+                participant.donation_charity = participant.vars['charity_rank'][1]
+            else:
+                participant.donation_charity = participant.vars['charity_rank'][4]
+        else:
+            participant.donation_stage = "stage3"
+            if player.charity_order:
+                participant.donation_charity = participant.vars['charity_rank'][4]
+            else:
+                participant.donation_charity = participant.vars['charity_rank'][1]
+        participant.donation_round = (player.id_in_group - 1) % 2 + 1
+        participant.donation_amount = cu(0.0)
+
+page_sequence = [
+    Ranking,
+]

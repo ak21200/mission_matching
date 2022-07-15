@@ -1,29 +1,18 @@
 {% block title %}Survey{% endblock %}
 {% block content %}
 
-    <p>
-        Please answer the following questions.
-    </p>
-
-    {% block form_content %}
-
             <div class="container border bg-light p-2 mt-2 mb-2">
                 <div class="mb-3">
 
                     {% formfields %}
                 </div>
             </div>
-    {% endblock form_content %}
 
-    {% next_button %}
-
-    <footer>
-            <hr/>
-            <div class="text-right">
-                <p class="text-muted font-italic">Laboratory for Economic and Decision Research, University of East Anglia
-                    <img src="{% static 'global/uea.png' %}" class="align-content-center ml-3" alt="UEA logo"/>
-                </p>
+    <div class="row justify-content-center">
+        <div class="col-1">
+            <button class="otree-btn-next btn btn-primary">Next</button>
         </div>
-        </footer>
+    </div>
+    {{ include "global/Footer.html" }}
 
 {% endblock %}

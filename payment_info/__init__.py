@@ -1,7 +1,6 @@
 from otree.api import *
 
 
-
 class Constants(BaseConstants):
     name_in_url = 'payment_info'
     players_per_group = None
@@ -17,26 +16,29 @@ class Group(BaseGroup):
 
 
 class Player(BasePlayer):
-    app_to_pay = models.StringField
-    charity_to_pay = models.StringField
+    app_to_pay = models.StringField()
+    charity_to_pay = models.StringField()
+    round_to_pay = models.IntegerField()
+
 
 # FUNCTIONS
 # PAGES
+
+charity_names = {
+    "CISWO": "CISWO (Coal Industry Social Welfare Organisation)",
+    "Ember": "The Crowd: Ember",
+    "CARE": "CARE (Christian Action, Research, and Education)",
+    "BPAS": "BPAS (British Pregnancy Advisory Service)",
+}
+
 class PaymentInfo(Page):
     @staticmethod
     def vars_for_template(player: Player):
-        import random
-        participant = player.participant
-        apps = ['stage1_final', 'stage2_2test', 'stage3']
-        app_to_pay = random.choice(apps)
-        participant.payoff = participant.app_payoffs[app_to_pay]
-        player.app_to_pay = app_to_pay
-
-        charity = ['stage2_2test', 'stage3']
-        charity_to_pay = random.choice(charity)
-        player.charity_to_pay = charity_to_pay
+        return {
+            'charity_name': charity_names[player.participant.donation_charity],
+        }
 
 
-
-
-page_sequence = [PaymentInfo]
+page_sequence = [
+    PaymentInfo
+]
