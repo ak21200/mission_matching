@@ -1,0 +1,38 @@
+
+
+ {% block title %}Summary{% endblock %}
+    {% block content %}
+
+        <h4>Your earnings</h4>
+        <p>
+            Stage 3 has been randomly chosen to determine your earnings for the session.<br>
+            Your earnings from that stage were <strong>{{ player.participant.app_payoffs.stage3 }}</strong>.
+        </p>
+
+        <h4>Charitable donations</h4>
+        <p>
+            {{ if player.id_in_group == 1}}
+            Your sliders completed in Stage 3 for <strong> {{ charity_name }}</strong> have been selected for donation.<br/>
+            A corresponding donation of <strong>{{ player.participant.stage_donation.stage3 }}</strong> will therefore be made.
+
+            <br/>
+
+
+            {{else}}
+            You have not been chosen for the charity donation.<br>
+            ______ amount was donated to ____________ charity.
+
+            {{endif}}
+        </p>
+
+        <h4>Next steps</h4>
+        <p>
+            Please raise your hand and an experimenter will come round to you.
+        </p>
+
+         <p>
+            Thank you for participating in today's experiment!  We hope to see you at another experiment at LEDR soon.
+        </p>
+
+        {{ include "global/Footer.html" }}
+    {% endblock %}
