@@ -5,7 +5,7 @@ from os import environ
 
 SESSION_CONFIGS = (
     dict(
-        name='Experiment',
+        name='Experiment_2',
         app_sequence=[
             'welcome',
             'stage1',
@@ -13,15 +13,15 @@ SESSION_CONFIGS = (
             'stage2',
             'stage3',
             'survey',
-            'payment_info'
+            'payment_info_s2'
         ],
-        num_demo_participants=6,
-        task_seconds=15,
+        num_demo_participants=3,
+        task_seconds=90,
         stage_index_offset=0,
         charity_round_offset=0,
     ),
 dict(
-        name='Experiment_V4',
+        name='Experiment_3',
         app_sequence=[
             'welcome',
             'stage1',
@@ -29,90 +29,10 @@ dict(
             'stage2',
             'stage3',
             'survey',
-            'payment_info_4'
+            'payment_info_s3'
         ],
-        num_demo_participants=6,
-        task_seconds=15,
-        stage_index_offset=0,
-        charity_round_offset=0,
-    ),
-dict(
-        name='Experiment_V5',
-        app_sequence=[
-            'welcome',
-            'stage1',
-            'mission_pe',
-            'stage2',
-            'stage3',
-            'survey',
-            'payment_info_5'
-        ],
-        num_demo_participants=6,
-        task_seconds=15,
-        stage_index_offset=0,
-        charity_round_offset=0,
-    ),
-dict(
-        name='Experiment_V6',
-        app_sequence=[
-            'welcome',
-            'stage1',
-            'mission_pe',
-            'stage2',
-            'stage3',
-            'survey',
-            'payment_info_6'
-        ],
-        num_demo_participants=6,
-        task_seconds=15,
-        stage_index_offset=0,
-        charity_round_offset=0,
-    ),
-dict(
-        name='Experiment_V7',
-        app_sequence=[
-            'welcome',
-            'stage1',
-            'mission_pe',
-            'stage2',
-            'stage3',
-            'survey',
-            'payment_info_7'
-        ],
-        num_demo_participants=6,
-        task_seconds=15,
-        stage_index_offset=0,
-        charity_round_offset=0,
-    ),
-dict(
-        name='Experiment_V8',
-        app_sequence=[
-            'welcome',
-            'stage1',
-            'mission_pe',
-            'stage2',
-            'stage3',
-            'survey',
-            'payment_info_8'
-        ],
-        num_demo_participants=6,
-        task_seconds=15,
-        stage_index_offset=0,
-        charity_round_offset=0,
-    ),
-dict(
-        name='Experiment_V9',
-        app_sequence=[
-            'welcome',
-            'stage1',
-            'mission_pe',
-            'stage2',
-            'stage3',
-            'survey',
-            'payment_info_9'
-        ],
-        num_demo_participants=6,
-        task_seconds=15,
+        num_demo_participants=3,
+        task_seconds=90,
         stage_index_offset=0,
         charity_round_offset=0,
     ),
@@ -142,8 +62,8 @@ PARTICIPANT_FIELDS = [
     'app_payoffs',
     'stage_donation',
     'rounds',
-    'app_to_pay',
     'donation_charity',
+    'payment_app',
 ]
 SESSION_FIELDS = ['params']
 

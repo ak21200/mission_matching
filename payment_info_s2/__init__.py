@@ -2,7 +2,7 @@ from otree.api import *
 
 
 class Constants(BaseConstants):
-    name_in_url = 'payment_info_9'
+    name_in_url = 'payment_info_s2'
     players_per_group = None
     num_rounds = 1
 
@@ -18,7 +18,8 @@ class Group(BaseGroup):
 class Player(BasePlayer):
     donation_amount = models.IntegerField()
     charity_to_pay = models.StringField()
-    round_to_pay = models.IntegerField()
+    payment_app = models.StringField()
+
 
 # FUNCTIONS
 # PAGES
@@ -34,18 +35,22 @@ class PaymentInfo(Page):
     @staticmethod
     def vars_for_template(player: Player):
         participant = player.participant
-        participant.payoff = participant.app_payoffs['stage3']
-        participant.donation_charity = participant.vars['charity_rank'][4]
+
+        if player.id_in_group % 3 == 0:
+            participant.payment_app = "stage1"
+        if player.id_in_group % 3 == 1:
+            participant.payment_app = "stage2"
+        else:
+            participant.payment_app = "stage3"
+
+        participant.payoff = participant.app_payoffs[participant.payment_app]
+        player.payment_app = participant.payment_app
+        participant.donation_charity = participant.vars['charity_rank'][1]
         return {
             'charity_name': charity_names[player.participant.donation_charity],
         }
 
 
-class ResultsWaitPage(WaitPage):
-    body_text = "Please wait while payments are being calculated"
-    wait_for_all_players = True
-
 page_sequence = [
-    ResultsWaitPage,
     PaymentInfo
 ]

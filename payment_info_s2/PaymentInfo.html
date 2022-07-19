@@ -1,12 +1,12 @@
 
 
- {% block title %}Summary{% endblock %}
+ {% block title %}Payment Summary{% endblock %}
     {% block content %}
 
         <h4>Your earnings</h4>
         <p>
-            Stage 3 has been randomly chosen to determine your earnings for the session.<br>
-            Your earnings from that stage were <strong>{{ player.participant.app_payoffs.stage3 }}</strong>.
+            {{ participant.payment_app}} has been randomly chosen to determine your earnings for the session.<br>
+            Your earnings from that stage were <strong>{{ player.participant.payoff }}</strong>.
         </p>
 
         <h4>Charitable donations</h4>
@@ -20,7 +20,7 @@
 
             {{else}}
             You have not been chosen for the charity donation.<br>
-            ______ amount was donated to ____________ charity.
+            Stage 2 was chosen for donation. The amount and the charity being donated to will be informed at the end of the experiment.
 
             {{endif}}
         </p>
